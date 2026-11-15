@@ -18,6 +18,7 @@ import type {
   MetaReports,
   ReleaseCatalog,
   TakeFile,
+  UsDroughtMonitorIndex,
 } from "./data-contract";
 import type { CatalogEntry, CommodityIndex, Meta, Overview, Series } from "./types";
 
@@ -91,6 +92,9 @@ export function getCropProgressCrops(): CropProgressCrop[] {
 }
 
 export const getGrainStocksIndex = () => readOptional<GrainStocksIndex>("reports/grain_stocks/index.json");
+
+export const getUsDroughtMonitorIndex = () =>
+  readOptional<UsDroughtMonitorIndex>("reports/us_drought_monitor/index.json");
 
 export function getGrainStocks(): GrainStocksCommodity[] {
   const idx = getGrainStocksIndex();

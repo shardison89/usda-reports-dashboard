@@ -24,6 +24,11 @@ SOURCE_DIRS: dict[str, tuple[str | None, str]] = {
     "fas_esr_api": ("export_sales", "json.gz"),
     # NASS release zips from ESMIS files[]: data/bronze/<report_id>/<release_key>.zip
     "esmis_zip": (None, "zip"),
+    # U.S. Drought Monitor: data/bronze/us_drought_monitor/<release_key>.json.gz and the
+    # current-conditions map PNG at data/bronze/us_drought_monitor_image/<release_key>.png
+    # (its own BronzeStore, report_id "us_drought_monitor_image").
+    "usdm_api": (None, "json.gz"),
+    "usdm_png": (None, "png"),
 }
 CSV_DIR = "usda_csv"
 XML_DIR = "esmis_xml"

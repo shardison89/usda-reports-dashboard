@@ -192,3 +192,18 @@ datasets:
       Implied disappearance per quarter, point in time: previous stocks (as printed in the same
       release) + WASDE production as of the release in the harvest quarter only − new stocks
       (first print). Imports omitted; NASS may revise production on the same day.
+  - report_id: us_drought_monitor
+    dataset: conus
+    schema_version: 1
+    model: fct_us_drought_monitor_weekly
+    columns: "*"
+    order_by: map_date
+    coverage: map_date
+    release_column: release_key
+    site_preview: true
+    licence: "Public domain (NDMC, University of Nebraska-Lincoln); cite the U.S. Drought Monitor"
+    description: >-
+      U.S. Drought Monitor, CONUS area of interest, since the 2018-01-02 map: % of area with no
+      drought and in categories D0-D4 (cumulative, "or worse"), the Drought Severity and
+      Coverage Index (DSCI = D0+D1+D2+D3+D4, 0-500) and its 5-year mean/min/max for the same
+      week of year, one row per week.

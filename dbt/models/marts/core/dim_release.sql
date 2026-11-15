@@ -73,6 +73,22 @@ with releases as (
         count(*)                  as n_rows
     from {{ ref('stg_grain_stocks') }}
     group by report_id, release_key
+
+    union all
+
+    -- U.S. Drought Monitor: one release per Thursday publication (a week may be printed by
+    -- more than one weekly pull; the trailing window overlaps).
+    select
+        report_id,
+        release_key,
+        min(release_ts_utc)       as release_ts_utc,
+        max(edition)              as edition,
+        min(source)               as source,
+        any_value(bronze_sha256)  as bronze_sha256,
+        min(vintage_quality)      as vintage_quality,
+        count(*)                  as n_rows
+    from {{ ref('stg_us_drought_monitor') }}
+    group by report_id, release_key
 )
 
 select

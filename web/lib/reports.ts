@@ -4,9 +4,9 @@ import type { Key } from "./i18n";
 // Crop Progress and Grain Stocks since cut C. Every report is live; a build without a report's
 // data shows that page's "not in this build yet" state, never invented numbers.
 export type ReportDef = {
-  id: "wasde" | "export_sales" | "crush" | "crop_progress" | "grain_stocks";
+  id: "wasde" | "export_sales" | "crush" | "crop_progress" | "grain_stocks" | "us_drought_monitor";
   /** report_id in the published JSON (the crush page is report "oilseed_crush"). */
-  reportId: "wasde" | "export_sales" | "oilseed_crush" | "crop_progress" | "grain_stocks";
+  reportId: "wasde" | "export_sales" | "oilseed_crush" | "crop_progress" | "grain_stocks" | "us_drought_monitor";
   name: Key;
   cadence: Key;
   cadenceDetail: Key;
@@ -59,6 +59,16 @@ export const REPORTS: ReportDef[] = [
     live: true,
     href: "/reports/grain-stocks/",
   },
+  {
+    id: "us_drought_monitor",
+    reportId: "us_drought_monitor",
+    name: "report.us_drought_monitor",
+    cadence: "cadence.weekly",
+    cadenceDetail: "cadence.d.weeklyThu",
+    color: "var(--r-drought)",
+    live: true,
+    href: "/reports/us-drought-monitor/",
+  },
 ];
 
 /** Report colour by published report_id ("cross" sits with Export Sales). */
@@ -68,6 +78,7 @@ export const REPORT_COLOR: Record<string, string> = {
   oilseed_crush: "var(--r-crush)",
   crop_progress: "var(--r-progress)",
   grain_stocks: "var(--r-stocks)",
+  us_drought_monitor: "var(--r-drought)",
   cross: "var(--r-esr)",
 };
 
@@ -78,6 +89,7 @@ export const REPORT_TILE: Record<string, string> = {
   oilseed_crush: "var(--tile-crush)",
   crop_progress: "var(--tile-progress)",
   grain_stocks: "var(--tile-stocks)",
+  us_drought_monitor: "var(--tile-drought)",
   cross: "var(--tile-esr)",
 };
 
@@ -88,6 +100,7 @@ export const REPORT_NAME: Record<string, Key> = {
   oilseed_crush: "report.crush",
   crop_progress: "report.crop_progress",
   grain_stocks: "report.grain_stocks",
+  us_drought_monitor: "report.us_drought_monitor",
 };
 
 /** Report page by published report_id. */
@@ -97,6 +110,7 @@ export const REPORT_HREF: Record<string, string> = {
   oilseed_crush: "/reports/oilseed-crush/",
   crop_progress: "/reports/crop-progress/",
   grain_stocks: "/reports/grain-stocks/",
+  us_drought_monitor: "/reports/us-drought-monitor/",
 };
 
 /** Commodity pages (/commodities/<slug>/): the commodities that at least three reports cover. */

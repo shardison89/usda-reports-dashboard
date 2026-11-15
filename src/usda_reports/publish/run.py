@@ -41,6 +41,7 @@ from usda_reports.publish.web_json import (
     build_tables,
     one,
 )
+from usda_reports.publish.web_us_drought_monitor import build_us_drought_monitor, publish_image
 
 log = get_logger(__name__)
 
@@ -197,6 +198,10 @@ def publish_all(
         )
     if registry.reports["grain_stocks"].enabled:
         build_grain_stocks(con, web, nxt.get("grain_stocks"))
+    if registry.reports["us_drought_monitor"].enabled:
+        udm_index = build_us_drought_monitor(con, web, nxt.get("us_drought_monitor"))
+        if udm_index is not None:
+            publish_image(settings.bronze_dir, manifest, web, udm_index)
 
     wasde_next = nxt.get(REPORT_ID)
     meta = build_meta(

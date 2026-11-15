@@ -102,3 +102,21 @@ reports:
     history_start: "2010-06"
     release_key_format: date
     spec: usda_reports.reports.grain_stocks.spec:GrainStocksSpec
+
+  # U.S. Drought Monitor (NDMC/USDA/NOAA) statistics API, CONUS area of interest. Weekly:
+  # NDMC publishes Thursday mornings (~08:30 ET) for the Tuesday map date. No ESMIS identifier
+  # and no API key; source details in config/reports/us_drought_monitor/source.yaml.
+  us_drought_monitor:
+    enabled: true
+    title: U.S. Drought Monitor
+    agency: USDA / NOAA / NDMC (National Drought Mitigation Center)
+    cadence: weekly
+    release_time_et: "08:30"
+    window_h: 6
+    grace_days: 10
+    key_env: null
+    licence: "Public domain (NDMC, University of Nebraska-Lincoln); cite the U.S. Drought Monitor"
+    min_rows: 1
+    history_start: "2018-01-02"
+    release_key_format: date
+    spec: usda_reports.reports.us_drought_monitor.spec:USDroughtMonitorSpec

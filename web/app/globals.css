@@ -32,14 +32,17 @@
   --pill-crush: #b45309; /* white text 5:1 */
   --pill-progress: #15803d; /* white text 5:1 */
   --pill-stocks: #6d28d9; /* white text 7:1 */
+  --pill-drought: #b91c1c; /* white text 6.5:1 */
   --r-progress: #15803d;
   --r-stocks: #6d28d9;
+  --r-drought: #b91c1c;
   /* Report tiles (home): solid report colour, white text >= 5:1 on each */
   --tile-wasde: #2563eb; /* 5.2:1 */
   --tile-esr: #0f766e; /* 5.5:1 */
   --tile-crush: #b45309; /* 5.0:1 */
   --tile-progress: #15803d; /* 5.0:1 */
   --tile-stocks: #6d28d9; /* 7.1:1 */
+  --tile-drought: #b91c1c; /* 6.5:1 */
   --shadow: 0 1px 2px rgba(20, 32, 48, 0.04);
 }
 
@@ -71,14 +74,17 @@
     --pill-crush: #b45309; /* white text stays >= 4.5:1 */
     --pill-progress: #15803d;
     --pill-stocks: #6d28d9;
+    --pill-drought: #b91c1c;
     --r-progress: #4ade80;
     --r-stocks: #a78bfa;
+    --r-drought: #f87171;
     /* solid tiles keep the deep colours: white text needs them */
     --tile-wasde: #1d4ed8;
     --tile-esr: #0f766e;
     --tile-crush: #b45309;
     --tile-progress: #15803d;
     --tile-stocks: #6d28d9;
+    --tile-drought: #b91c1c;
     --shadow: none;
   }
 }
@@ -110,14 +116,17 @@
   --pill-crush: #b45309; /* white text stays >= 4.5:1 */
   --pill-progress: #15803d;
   --pill-stocks: #6d28d9;
+  --pill-drought: #b91c1c;
   --r-progress: #4ade80;
   --r-stocks: #a78bfa;
+  --r-drought: #f87171;
   /* solid tiles keep the deep colours: white text needs them */
   --tile-wasde: #1d4ed8;
   --tile-esr: #0f766e;
   --tile-crush: #b45309;
   --tile-progress: #15803d;
   --tile-stocks: #6d28d9;
+  --tile-drought: #b91c1c;
   --shadow: none;
 }
 

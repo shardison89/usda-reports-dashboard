@@ -1,0 +1,8 @@
+[
+  {"mapDate": "2026-11-10T00:00:00", "areaOfInterest": "CONUS", "none": 33.02, "d0": 66.98, "d1": 41.68, "d2": 21.08, "d3": 7.92, "d4": 1.84, "validStart": "2026-11-10T00:00:00", "validEnd": "2026-11-16T23:59:59", "statisticFormatID": 1},
+  {"mapDate": "2026-11-03T00:00:00", "areaOfInterest": "CONUS", "none": 30.94, "d0": 69.06, "d1": 43.98, "d2": 22.96, "d3": 8.20, "d4": 1.60, "validStart": "2026-11-03T00:00:00", "validEnd": "2026-11-09T23:59:59", "statisticFormatID": 1},
+  {"mapDate": "2026-10-27T00:00:00", "areaOfInterest": "CONUS", "none": 27.34, "d0": 72.66, "d1": 49.49, "d2": 26.74, "d3": 9.36, "d4": 1.65, "validStart": "2026-10-27T00:00:00", "validEnd": "2026-11-02T23:59:59", "statisticFormatID": 1},
+  {"mapDate": "2026-11-10T00:00:00", "areaOfInterest": "Total", "none": 35.10, "d0": 64.90, "d1": 40.02, "d2": 20.11, "d3": 7.55, "d4": 1.72, "validStart": "2026-11-10T00:00:00", "validEnd": "2026-11-16T23:59:59", "statisticFormatID": 1},
+  {"mapDate": "2026-11-03T00:00:00", "areaOfInterest": "Total", "none": 32.88, "d0": 67.12, "d1": 42.21, "d2": 21.84, "d3": 7.90, "d4": 1.50, "validStart": "2026-11-03T00:00:00", "validEnd": "2026-11-09T23:59:59", "statisticFormatID": 1},
+  {"mapDate": "2026-10-27T00:00:00", "areaOfInterest": "Total", "none": 29.20, "d0": 70.80, "d1": 47.60, "d2": 25.50, "d3": 9.00, "d4": 1.55, "validStart": "2026-10-27T00:00:00", "validEnd": "2026-11-02T23:59:59", "statisticFormatID": 1}
+]

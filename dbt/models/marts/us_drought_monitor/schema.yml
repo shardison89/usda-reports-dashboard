@@ -1,0 +1,112 @@
+version: 2
+models:
+- name: fct_us_drought_monitor_weekly
+  description: U.S. Drought Monitor, CONUS area of interest, one row per map_date (Tuesday)
+    since the 2018-01-02 map. none_pct is the share of CONUS with no drought; d0_pct … d4_pct
+    are the share in that category OR WORSE (cumulative, as NDMC publishes them). dsci (0-500)
+    is the Drought Severity and Coverage Index (d0+d1+d2+d3+d4). The 5-year comparison is own
+    (NDMC publishes none) — the 5 previous calendar years at the week within ±3 days by day
+    of year. Published as us_drought_monitor__conus__v1.
+  config:
+    contract:
+      enforced: true
+  columns:
+  - name: map_date
+    data_type: date
+    description: Tuesday the drought categories are as of.
+    data_tests:
+    - not_null
+    - unique
+  - name: area_of_interest
+    data_type: varchar
+    description: Always CONUS (the 48 contiguous states; the "Total" area the API also returns,
+      which adds Alaska, Hawaii and Puerto Rico, is dropped at silver).
+    data_tests:
+    - accepted_values:
+        arguments:
+          values: [CONUS]
+  - name: none_pct
+    data_type: double
+    description: Percent of CONUS with no drought (D0 or worse's complement; none_pct + d0_pct =
+      100).
+    data_tests:
+    - not_null
+  - name: d0_pct
+    data_type: double
+    description: Percent of CONUS in D0 (Abnormally Dry) or worse.
+    data_tests:
+    - not_null
+  - name: d1_pct
+    data_type: double
+    description: Percent of CONUS in D1 (Moderate Drought) or worse.
+    data_tests:
+    - not_null
+  - name: d2_pct
+    data_type: double
+    description: Percent of CONUS in D2 (Severe Drought) or worse.
+    data_tests:
+    - not_null
+  - name: d3_pct
+    data_type: double
+    description: Percent of CONUS in D3 (Extreme Drought) or worse.
+    data_tests:
+    - not_null
+  - name: d4_pct
+    data_type: double
+    description: Percent of CONUS in D4 (Exceptional Drought).
+    data_tests:
+    - not_null
+  - name: dsci
+    data_type: double
+    description: Drought Severity and Coverage Index, d0_pct + d1_pct + d2_pct + d3_pct + d4_pct
+      (0 = no drought anywhere in CONUS, 500 = all of CONUS in D4).
+    data_tests:
+    - not_null
+  - name: release_key
+    data_type: varchar
+    description: U.S. Drought Monitor release (the Thursday after map_date) whose values are
+      shown.
+    data_tests:
+    - not_null
+  - name: release_ts_utc
+    data_type: timestamp with time zone
+    description: Publication instant of that release (~08:30 ET, stored in UTC).
+    data_tests:
+    - not_null
+  - name: first_release_key
+    data_type: varchar
+    description: First release that printed the week (point-in-time availability).
+  - name: first_release_ts_utc
+    data_type: timestamp with time zone
+    description: Publication instant of the first release (UTC).
+  - name: n_vintages
+    data_type: integer
+    description: Releases that printed the week (the trailing weekly pull overlaps 10 weeks).
+  - name: n_5yr
+    data_type: integer
+    description: Previous calendar years (of the last 5) with a mapped week within ±3 days by
+      day of year (small sample, n <= 5).
+  - name: dsci_5yr_mean
+    data_type: double
+    description: Mean DSCI of those weeks.
+  - name: dsci_5yr_min
+    data_type: double
+    description: Minimum DSCI of those weeks.
+  - name: dsci_5yr_max
+    data_type: double
+    description: Maximum DSCI of those weeks.
+  - name: hist_max_release_ts_utc
+    data_type: timestamp with time zone
+    description: Newest release instant among the comparison weeks (always before release_ts_utc).
+  - name: source_url
+    data_type: varchar
+    description: USDM statistics API endpoint whose values are shown.
+  - name: is_latest_week
+    data_type: boolean
+    description: True on the newest week published.
+  data_tests:
+  # The own 5-year comparison only uses weeks released before this week.
+  - assert_no_lookahead:
+      arguments:
+        left_ts: release_ts_utc
+        right_ts: hist_max_release_ts_utc

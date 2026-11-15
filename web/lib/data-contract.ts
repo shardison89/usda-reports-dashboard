@@ -613,6 +613,48 @@ export type GrainStocksCommodity = {
   }[];
 };
 
+// ------------------------------------------------- reports/us_drought_monitor/index.json
+
+export type UsDroughtMonitorLatest = {
+  release_key: string;
+  release_ts_utc: string | null; // ~08:30 ET
+  map_date: string; // Tuesday the drought categories are as of
+  vintage_quality: "as_published";
+};
+export type UsDroughtMonitorIndex = {
+  schema_version: 1;
+  report_id: "us_drought_monitor";
+  latest: UsDroughtMonitorLatest;
+  next_release: string | null;
+  history_start: string; // "2018-01-02"
+  n_weeks: number;
+  current: {
+    map_date: string;
+    none_pct: number | null;
+    d0_pct: number | null;
+    d1_pct: number | null;
+    d2_pct: number | null;
+    d3_pct: number | null;
+    d4_pct: number | null;
+    dsci: number | null; // 0-500
+    dsci_5yr_mean: number | null;
+    dsci_5yr_min: number | null;
+    dsci_5yr_max: number | null;
+    n_5yr: number;
+  };
+  /** [map_date, dsci, 5yr mean, min, max, n] */
+  dsci: {
+    basis: "own_5yr_same_week_by_day_of_year";
+    series: [string, number | null, number | null, number | null, number | null, number][];
+  };
+  /** [map_date, none_pct, d0_pct, d1_pct, d2_pct, d3_pct, d4_pct] */
+  categories: {
+    series: [string, number | null, number | null, number | null, number | null, number | null, number | null][];
+  };
+  /** The current-conditions map, snapshotted into the site (never hot-linked live). */
+  image: { url: string; captured_at: string | null };
+};
+
 // ------------------------------------------------- lens/<commodity>.json (cut C, /commodities)
 
 export type LensMetric = {

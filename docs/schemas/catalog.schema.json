@@ -342,6 +342,35 @@
         "is_latest_month": "boolean"
       }
     },
+    "us_drought_monitor__conus__v1": {
+      "report_id": "us_drought_monitor",
+      "dataset": "conus",
+      "schema_version": 1,
+      "model": "fct_us_drought_monitor_weekly",
+      "fields": {
+        "map_date": "date",
+        "area_of_interest": "string",
+        "none_pct": "number",
+        "d0_pct": "number",
+        "d1_pct": "number",
+        "d2_pct": "number",
+        "d3_pct": "number",
+        "d4_pct": "number",
+        "dsci": "number",
+        "release_key": "string",
+        "release_ts_utc": "datetime",
+        "first_release_key": "string",
+        "first_release_ts_utc": "datetime",
+        "n_vintages": "integer",
+        "n_5yr": "integer",
+        "dsci_5yr_mean": "number",
+        "dsci_5yr_min": "number",
+        "dsci_5yr_max": "number",
+        "hist_max_release_ts_utc": "datetime",
+        "source_url": "string",
+        "is_latest_week": "boolean"
+      }
+    },
     "wasde__balance_sheets__v1": {
       "report_id": "wasde",
       "dataset": "balance_sheets",

@@ -1,0 +1,29 @@
+# U.S. Drought Monitor (NDMC/USDA/NOAA) statistics API: what to pull and how to read it.
+#
+# Spike 2026-11-15 against https://usdmdataservices.unl.edu:
+#   GET /api/USStatistics/GetDroughtSeverityStatisticsByAreaPercent
+#       ?aoi=us&startdate=M/D/YYYY&enddate=M/D/YYYY&statisticsType=1
+#       (Accept: application/json; without it the API answers CSV instead)
+#   Returns one row per week per area of interest, `aoi=us` giving BOTH "CONUS" and "Total"
+#   (Total adds Alaska, Hawaii and Puerto Rico where mapped): only "CONUS" is kept.
+#   Each row: mapDate (the Tuesday the map is as of), areaOfInterest, none, d0..d4 (percent of
+#   area in that category OR WORSE, cumulative), validStart, validEnd, statisticFormatID.
+#   DSCI = d0 + d1 + d2 + d3 + d4 (0 = no drought anywhere, 500 = all of CONUS in D4).
+#   statisticsType=1 is "Percent Area" (the only one this report uses).
+#
+#   The map image (current conditions, PNG) is published at a fixed URL and updates on the
+#   same Thursday cadence as the statistics:
+#     https://droughtmonitor.unl.edu/data/png/current/current_usdm.png
+api_base: https://usdmdataservices.unl.edu
+endpoints:
+  stats: /api/USStatistics/GetDroughtSeverityStatisticsByAreaPercent
+image_url: https://droughtmonitor.unl.edu/data/png/current/current_usdm.png
+# `aoi=us` returns CONUS and Total; only CONUS is kept (plan: CONUS area of interest).
+aoi: us
+area_of_interest: CONUS
+statistics_type: 1
+# First week backfilled (a Tuesday map date close to 2018-01-01).
+history_start: "2018-01-02"
+# Weekly pulls re-fetch this many days of history (about 10 weeks): enough to catch a late
+# correction to a recent week without re-pulling the full series every run.
+weekly_window_days: 70

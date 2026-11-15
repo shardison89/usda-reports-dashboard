@@ -1,0 +1,15 @@
+# U.S. Drought Monitor (NDMC): weekly on Thursdays at ~08:30 ET, for the Tuesday map date
+# (lag_days: 2). Unlike the USDA ESMIS reports, NDMC/University of Nebraska-Lincoln publishes
+# on its own schedule and is not known to shift for federal holidays or shutdowns (the Monitor
+# continued without interruption through every 2013/2018-19/2025 federal funding lapse), so
+# no overrides or cancelled dates are modelled yet. Amend this file if a real delay is found.
+source: https://droughtmonitor.unl.edu/
+release_time_et: "08:30"
+rule:
+  weekday: thursday
+  # First Thursday release backfilled (the Tuesday map date two days before is 2018-01-02).
+  start: "2018-01-04"
+  lag_days: 2
+  holiday_shift_days: 0
+overrides: {}
+cancelled: []

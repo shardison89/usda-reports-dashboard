@@ -5,14 +5,14 @@ import { DateText, MonthYear, T } from "@/components/chrome/I18n";
 import TopBar, { CommodityPills } from "@/components/chrome/TopBar";
 import { EsrLatestText, FreshnessChip, KeyDates, StaleBanner } from "@/components/Freshness";
 import { commodityPills, releaseInfo } from "@/lib/dashboard";
-import { getCropProgressIndex, getCrushIndex, getEsrIndex, getGrainStocksIndex, getInsights, getMeta, getReleaseCatalog, getReportsMeta } from "@/lib/data";
+import { getCropProgressIndex, getCrushIndex, getEsrIndex, getGrainStocksIndex, getInsights, getMeta, getReleaseCatalog, getReportsMeta, getUsDroughtMonitorIndex } from "@/lib/data";
 import { num } from "@/lib/format";
 import type { Key } from "@/lib/i18n";
 
 export const metadata: Metadata = { title: "Reports · USDA Reports Dashboard" };
 
 // Cadence + grace when insights.json (gates.stale_after_days) is not in the build.
-const DEFAULT_STALE: Record<string, number> = { wasde: 76, export_sales: 17, oilseed_crush: 76, crop_progress: 17, grain_stocks: 192 };
+const DEFAULT_STALE: Record<string, number> = { wasde: 76, export_sales: 17, oilseed_crush: 76, crop_progress: 17, grain_stocks: 192, us_drought_monitor: 17 };
 
 function Row({ label, children }: { label: React.ReactNode; children: React.ReactNode }) {
   return (
@@ -41,6 +41,9 @@ export default function ReportsPage() {
   const gs = getGrainStocksIndex();
   const gsMeta = reports.grain_stocks;
   const gsTs = gsMeta?.release_ts_utc ?? gs?.latest.release_ts_utc ?? null;
+  const udm = getUsDroughtMonitorIndex();
+  const udmMeta = reports.us_drought_monitor;
+  const udmTs = udmMeta?.release_ts_utc ?? udm?.latest.release_ts_utc ?? null;
   const esr = getEsrIndex();
   const stale = { ...DEFAULT_STALE, ...(getInsights()?.gates.stale_after_days ?? {}) };
   const wasdeTs = reports.wasde?.release_ts_utc ?? meta.latest.release_date;
@@ -71,6 +74,9 @@ export default function ReportsPage() {
       )}
       {gs && (
         <StaleBanner reportId="grain_stocks" name="report.grain_stocks" cadence="cadence.quarterly" releaseTs={gsTs} maxDays={stale.grain_stocks} />
+      )}
+      {udm && (
+        <StaleBanner reportId="us_drought_monitor" name="report.us_drought_monitor" cadence="cadence.weekly" releaseTs={udmTs} maxDays={stale.us_drought_monitor} />
       )}
 
       <div className="grid-fit-380">
@@ -306,6 +312,49 @@ export default function ReportsPage() {
                 <T k="reports.openGs" />
               </Link>
               <Link href="/data/#report-grain_stocks" className="inline-flex min-h-11 items-center text-link">
+                <T k="reports.data" />
+              </Link>
+            </div>
+          </article>
+        )}
+
+        {udm && (
+          <article id="us_drought_monitor" aria-labelledby="h-udm" className="card flex flex-col gap-3 p-5" style={{ borderColor: "var(--r-drought)" }}>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <div className="eyebrow" style={{ color: "var(--r-drought)" }}>
+                  <T k="cadence.d.weeklyThu" />
+                </div>
+                <h2 id="h-udm" lang="en" className="m-0 text-[17px] font-bold">
+                  U.S. Drought Monitor · NDMC / USDA / NOAA
+                </h2>
+              </div>
+              <LiveChip color="var(--pill-drought)" />
+            </div>
+            <dl className="m-0 grid">
+              <Row label={<T k="reports.latest" />}>
+                <KeyDates k="reports.udmLatest" dates={{ date: udm.latest.map_date, rel: udm.latest.release_key }} />
+              </Row>
+              <Row label={<T k="reports.next" />}>
+                <DateText iso={udmMeta?.next_release ?? udm.next_release} />
+              </Row>
+              <Row label={<T k="reports.freshness" />}>
+                <FreshnessChip releaseTs={udmTs} maxDays={stale.us_drought_monitor} />
+              </Row>
+              {udmMeta && (
+                <Row label={<T k="reports.history" />}>
+                  <T k="reports.releasesRows" v={{ releases: num(udmMeta.releases), rows: num(udmMeta.rows) }} />
+                  <div className="text-xs font-normal text-muted">
+                    <T k="card.windowUdm" v={{ from: udm.history_start }} />
+                  </div>
+                </Row>
+              )}
+            </dl>
+            <div className="mt-auto flex flex-wrap gap-x-5">
+              <Link href="/reports/us-drought-monitor/" className="inline-flex min-h-11 items-center font-semibold text-link">
+                <T k="reports.openUdm" />
+              </Link>
+              <Link href="/data/#report-us_drought_monitor" className="inline-flex min-h-11 items-center text-link">
                 <T k="reports.data" />
               </Link>
             </div>

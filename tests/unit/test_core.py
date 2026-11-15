@@ -58,8 +58,15 @@ def test_registry_enables_every_v1_report(config_dir):
         "oilseed_crush",
         "crop_progress",
         "grain_stocks",
+        "us_drought_monitor",
     ]
-    assert {"export_sales", "oilseed_crush", "crop_progress", "grain_stocks"} <= set(reg.reports)
+    assert {
+        "export_sales",
+        "oilseed_crush",
+        "crop_progress",
+        "grain_stocks",
+        "us_drought_monitor",
+    } <= set(reg.reports)
     spec = reg.spec("wasde", Settings(config_dir=config_dir))
     assert isinstance(spec, WasdeSpec)
     assert spec.config_dir == config_dir / "reports" / "wasde"

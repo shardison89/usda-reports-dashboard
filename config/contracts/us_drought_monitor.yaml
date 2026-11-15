@@ -1,0 +1,23 @@
+# Silver contract for the U.S. Drought Monitor (checked by usda_reports.core.contracts on
+# every build and on every pulled bundle before it reaches bronze).
+# One row per (release, map_date), CONUS only. A week may be printed by more than one weekly
+# pull (the trailing window overlaps); gold keeps the latest and dates first availability
+# from the first (same pattern as Crop Progress).
+report_id: us_drought_monitor
+release_column: release_key
+release_label: U.S. Drought Monitor releases
+key:
+  - release_key
+  - map_date
+not_null:
+  - release_key
+  - area_of_interest
+  - map_date
+  - none_pct
+  - d0_pct
+  - d1_pct
+  - d2_pct
+  - d3_pct
+  - d4_pct
+min_rows_per_release: 1
+envelope: true
