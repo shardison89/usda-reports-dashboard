@@ -60,18 +60,19 @@ export default function UsDroughtMonitorView({
       : t("udm.c1.ariaNoBand", { ...dsciAriaVars, min: MIN_N });
   const dsciRows = dsci.map((r) => [shortDate(r[0], true, lang) ?? r[0], num(r[1], 0), num(r[2], 0), num(r[3], 0), num(r[4], 0), r[5]]);
 
-  // ---- chapter 2: D0-D4 shares, 100%-stacked
+  // ---- chapter 2: D1-D4 shares (exclusive bands), D4 at the bottom (most severe) rising to
+  // D0 at the top (least severe); "No Drought" is not charted. Not a 100%-stack: the top of
+  // the stack is d0_pct, the share of CONUS in any drought at all.
   const cats = index.categories.series;
   const catWeeks = cats.map((r) => r[0]);
   const xs = cats.map((_, i) => i + 1);
   const diff = (a: number | null, b: number | null) => (a === null || b === null ? null : a - b);
   const layers: AreaLayer[] = [
-    { id: "none", color: CATEGORY_COLORS.none, values: cats.map((r) => r[1]) },
-    { id: "d0", color: CATEGORY_COLORS.d0, values: cats.map((r) => diff(r[2], r[3])) },
-    { id: "d1", color: CATEGORY_COLORS.d1, values: cats.map((r) => diff(r[3], r[4])) },
-    { id: "d2", color: CATEGORY_COLORS.d2, values: cats.map((r) => diff(r[4], r[5])) },
-    { id: "d3", color: CATEGORY_COLORS.d3, values: cats.map((r) => diff(r[5], r[6])) },
     { id: "d4", color: CATEGORY_COLORS.d4, values: cats.map((r) => r[6]) },
+    { id: "d3", color: CATEGORY_COLORS.d3, values: cats.map((r) => diff(r[5], r[6])) },
+    { id: "d2", color: CATEGORY_COLORS.d2, values: cats.map((r) => diff(r[4], r[5])) },
+    { id: "d1", color: CATEGORY_COLORS.d1, values: cats.map((r) => diff(r[3], r[4])) },
+    { id: "d0", color: CATEGORY_COLORS.d0, values: cats.map((r) => diff(r[2], r[3])) },
   ];
   const catAria = t("udm.c2.aria", { date: shortDate(catWeeks.at(-1), true, lang) ?? "—" });
   const catRows = cats.map((r) => [shortDate(r[0], true, lang) ?? r[0], pct(r[1]), pct(r[2]), pct(r[3]), pct(r[4]), pct(r[5]), pct(r[6])]);
@@ -159,7 +160,7 @@ export default function UsDroughtMonitorView({
         </p>
         <CategoryArea xs={xs} layers={layers} xMax={xs.length} xTicks={weekTicks(catWeeks, lang)} ariaLabel={catAria} />
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted" data-testid="udm-c2-legend">
-          {(["none", "d0", "d1", "d2", "d3", "d4"] as const).map((k) => (
+          {(["d4", "d3", "d2", "d1", "d0"] as const).map((k) => (
             <span key={k} className="flex items-center gap-1.5">
               <span aria-hidden="true" className="inline-block h-2.5 w-3.5 rounded-sm" style={{ background: CATEGORY_COLORS[k] }} />
               {t(`udm.legend.${k}`)}
